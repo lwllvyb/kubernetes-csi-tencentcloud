@@ -16,7 +16,7 @@ spec:
       hostIPC: true
       containers:
         - name: driver-registrar
-          image: ccr.ccs.tencentyun.com/library/csi-driver-registrar:0.2.0
+          image: ccr.ccs.tencentyun.com/library/csi-driver-registrar:0.3.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -78,7 +78,7 @@ spec:
         - name: global-mount-dir
           hostPath:
             path: /var/lib/kubelet/plugins/kubernetes.io/csi
-            type: Directory
+            type: DirectoryOrCreate
         - name: device-dir
           hostPath:
             path: /dev
@@ -98,7 +98,7 @@ spec:
       serviceAccount: csi-tencentcloud
       containers:
         - name: csi-provisioner
-          image: ccr.ccs.tencentyun.com/library/csi-external-provisioner:0.2.0
+          image: ccr.ccs.tencentyun.com/library/csi-external-provisioner:0.3.0
           args:
             - "--provisioner=com.tencent.cloud.csi.cbs"
             - "--csi-address=$(ADDRESS)"
@@ -112,7 +112,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-attacher
-          image: ccr.ccs.tencentyun.com/library/csi-external-attacher:0.2.0
+          image: ccr.ccs.tencentyun.com/library/csi-external-attacher:0.3.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
